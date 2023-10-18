@@ -30,5 +30,8 @@ Route::get('/epreuveAdd',[EpreuveController::class,'store'])->name('epreuve');
 Route::get('/matiere',[MatController::class,'output'])->name('matiere');
 Route::get('/matiereAdd',[MatController::class,'store'])->name('matiere');
 
-Route::post('/epreuve',[EpreuveController::class,'insert'])->name('InsertEpreuve');
+
+Route::get('/addepreuve',[EpreuveController::class,'show']);
+
+Route::post('/insertEpreuve',[EpreuveController::class,'insert']);
 

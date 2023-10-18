@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Matiere;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MatController extends Controller
 {
-    public function output (){
 
+    public function output (){
+        
+        
        // $tab =DB::select('SELECT * FROM matieres'); 
-       $tab =DB::table('matieres')->get();
+       $tab =Matiere::all();
         
         return view('matiere')->with('matieres',$tab);
 
@@ -26,10 +29,17 @@ class MatController extends Controller
     }
 
     public function store(){
-        DB:: table('matieres') ->insert([
-            'Code' => 'MATH',
-            'Libelle' => 'Mathematiques',
-            'Coef' => 3.5
-        ]);
+      //  DB:: table('matieres') ->insert([
+          //  'Code' => 'MATH',
+            //'Libelle' => 'Mathematiques',
+            //'Coef' => 3.5
+        //]);
+            
+     Matiere::create([
+        "code" =>"MATH",
+        "libelle"=>"Mathematique",
+        "coef"=>4
+    ]);
+
     }
 }

@@ -18,6 +18,7 @@
             <td>{{$matiere->Code}}</td>
             <td>{{$matiere->Libelle}}</td>
             <td>{{$matiere->Coef}}</td>
+            <td>{{$matiere->matiere_id}}</td>
         @endforeach
         </tr>
     </tbody>
