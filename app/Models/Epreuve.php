@@ -11,4 +11,8 @@ class Epreuve extends Model
 
     protected $fillable = ["numero","date","lieu"];
     
+    public function matieres (){
+        return $this->belongsTo(Matiere::class);
+    }
+    
 }

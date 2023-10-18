@@ -10,4 +10,8 @@ class Matiere extends Model
     use HasFactory;
 
  protected $fillable =["code","libelle","coef"];
+
+ public function epreuves(){
+        return $this->hasMany(Epreuve::class);
+ }
 }
