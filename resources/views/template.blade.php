@@ -45,7 +45,10 @@
 							<a class ="nav-link" href='{!!url('/epreuve');!!}'>Epreuve</a>
 						</li>
 						<li class="nav-item dropdown">
-							<a class ="nav-link" href='{!!url('/addepreuve');!!}'>Ajouter</a>
+							<a class ="nav-link" href='{!!url('/insertEpreuve');!!}'>Ajouter Epreuve</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class ="nav-link" href='{!!url('/insertMatiere');!!}'>Ajouter Matiere</a>
 						</li>
 					</ul>
 				</div>

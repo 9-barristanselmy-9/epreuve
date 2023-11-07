@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Matiere;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
+
+
 
 class MatController extends Controller
 {
@@ -19,27 +23,31 @@ class MatController extends Controller
 
         
     }
+
+
+    public function show(){
+        return view('insertMatiere');
+    }
+
+    //
     public function insert(Request $request){
             
-        $code = $request->input('code');
-        $libelle = $request->input('libelle');
-        $coef = $request->input('coef');
-        $tab = DB::insert('INSERT INTO matieres (Code,Libelle,Coef) VALUES (?,?,?)',[$code,$libelle,$coef]);
-        return redirect()->route('matiere');
-    }
 
-    public function store(){
-      //  DB:: table('matieres') ->insert([
-          //  'Code' => 'MATH',
-            //'Libelle' => 'Mathematiques',
-            //'Coef' => 3.5
-        //]);
-            
-     Matiere::create([
-        "code" =>"MATH",
-        "libelle"=>"Mathematique",
-        "coef"=>4
+    $validator = Validator::make($request->all(),['code' =>'bail|required|alpha',
+    'libelle'=>'bail|required|between:5,100|alpha',
+    'coef'=>'bail|required|numeric|between:1,5',
     ]);
-
+    
+    if($validator->fails()){
+        return back()->withErrors($validator)->withInput();
+    }else{
+        Matiere::Create($request->all());
+        return redirect('/matiere');
     }
+    
+
+   
+    }
+
+    
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Epreuve;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 
 
  class EpreuveController extends Controller {
@@ -27,19 +29,19 @@ use Illuminate\Support\Facades\DB;
 
 
     public function insert(Request $request){
-                
-            $numero = $request->input('numero');
-            $date = $request->input('date');
-            $lieu = $request->input('lieu');
-             DB::insert('INSERT INTO epreuves (Numero,Date,Lieu) VALUES (?,?,?)',[$numero,$date,$lieu]);
-            return redirect('epreuve');
+                $validate=Validator::make($request->all(),['numero'=>'bail|required|numeric|gt:0',
+                    'date'=>'bail|required|date',
+                    'lieu'=>'bail|required|max:20',
+                    'matiere_id'=>'bail|required'
+                    ]);
+                    if($validate->fails()){
+                        return back()->withErrors($validate)->withInput();
+                    }else{
+                      Epreuve::Create($request->all())
+                      ->with('success','Epreuve ajoutée avec succès');
+                      return redirect('/epreuve');
+                    }
+                   
     }
 
-    public function store(){
-      Epreuve::create([
-        "numero" =>1001,
-        "date"=>"2023-04-15",
-        "lieu"=>"Tunis"]);
-      
-    }
-}
+  }

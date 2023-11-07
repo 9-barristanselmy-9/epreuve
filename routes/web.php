@@ -23,15 +23,15 @@ Route::get('/', function () {
     
 });
 
-
+//select all epreuves
 Route::get('/epreuve',[EpreuveController::class,'output'])->name('epreuve');
-Route::get('/epreuveAdd',[EpreuveController::class,'store'])->name('epreuve');
-
+//select all matiere
 Route::get('/matiere',[MatController::class,'output'])->name('matiere');
-Route::get('/matiereAdd',[MatController::class,'store'])->name('matiere');
 
-
-Route::get('/addepreuve',[EpreuveController::class,'show']);
-
-Route::post('/insertEpreuve',[EpreuveController::class,'insert']);
+//add epreuve
+Route::get('/insertEpreuve',[EpreuveController::class,'show'])->name('insertEpreuve');
+Route::post('/insertEpreuve',[EpreuveController::class,'insert'])->name('insertEpreuve');
+//add mateire
+Route::get('/insertMatiere',[MatController::class,'show'])->name('insertMatiere');
+Route::post('/insertMatiere',[MatController::class,'insert'])->name('insertMatiere');
 
