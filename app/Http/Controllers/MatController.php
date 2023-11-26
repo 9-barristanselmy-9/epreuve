@@ -13,41 +13,64 @@ use Illuminate\Support\Facades\Redirect;
 class MatController extends Controller
 {
 
-    public function output (){
-        
-        
-       // $tab =DB::select('SELECT * FROM matieres'); 
-       $tab =Matiere::all();
-        
-        return view('matiere')->with('matieres',$tab);
+    public function index()
+    {
 
-        
+        $tab = Matiere::all();
+
+        return view('matiere')->with('matieres', $tab);
     }
 
 
-    public function show(){
+    public function create()
+    {
         return view('insertMatiere');
     }
 
-    //
-    public function insert(Request $request){
-            
 
-    $validator = Validator::make($request->all(),['code' =>'bail|required|alpha',
-    'libelle'=>'bail|required|between:5,100|alpha',
-    'coef'=>'bail|required|numeric|between:1,5',
-    ]);
-    
-    if($validator->fails()){
-        return back()->withErrors($validator)->withInput();
-    }else{
-        Matiere::Create($request->all());
-        return redirect('/matiere');
-    }
-    
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'code' => 'bail|required|alpha',
+            'libelle' => 'bail|required|between:5,100|alpha',
+            'coef' => 'bail|required|numeric|between:1,5',
+        ]);
 
-   
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        } else {
+            Matiere::Create($request->all());
+            return redirect('/matiere');
+        }
     }
 
-    
+    public function edit($id)
+    {
+        $matieres = Matiere::findOrFail($id);
+        return view('updateMatiere', compact('matieres'));
+    }
+
+    public function update(Request $request, Matiere $matiere)
+    {
+        $validator = Validator::make($request->all(), [
+            'code' => 'bail|required|alpha',
+            'libelle' => 'bail|required|between:5,100|alpha',
+            'coef' => 'bail|required|numeric|between:1,5',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        } else {
+            $matiere->update($request->all());
+            return redirect(route('matiere.index'))->with('success', 'Matiere modifié avec succès');
+        }
+    }
+
+    public function destroy(Matiere $matiere)
+    {
+
+        $matiere->epreuves()->delete();
+        $matiere->delete();
+        return redirect(route('matiere.index'))->with('success', 'matiere supprimé avec succès');
+    }
 }

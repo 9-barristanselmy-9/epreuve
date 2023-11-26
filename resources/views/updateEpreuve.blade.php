@@ -1,23 +1,25 @@
 @extends('template')
 @section('title')
-    Epreuve
+    update-epreuve
 @endsection
 @section('contenu')
 
 <div class="container-epreuve">
 
-    <h3 class= "Heading" >Ajouter Epreuve</h3>
+    <h3 class= "Heading" >Modifier Epreuve</h3>
 
-    <form method="post" action={{route('epreuve.store')}}>
+    <form method="post" action={{route('epreuve.update' ,$epreuves->id)}}>
         @csrf
+        @method('PUT')
+        <input type="text" style="display:none" value="{{$epreuves->id}}" />
         <div class="form-group">
-        <input type="text" name="numero" placeholder="numero" >
+        <input type="text" name="numero" placeholder="numero" value="{{$epreuves->Numero}}">
         </div>
         <div class="form-group">
-        <input type="date" name="date"  placeholder="Date">
+        <input type="date" name="date"  placeholder="Date" value="{{$epreuves->Date}}">
         </div>
         <div class="form-group">
-        <input type="text" name="lieu"placeholder="Lieu" >
+        <input type="text" name="lieu"placeholder="Lieu" value="{{$epreuves->Lieu}}">
         </div>
         <div class="form-group">
             <select name="matiere_id">
@@ -26,7 +28,7 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Ajouter</button>
+        <button type="submit" class="btn btn-primary">Modifier</button>
     </form>
     </div>
 

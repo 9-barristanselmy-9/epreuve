@@ -13,3 +13,7 @@
     background-color: #f00;
     color: #fff;
 }
+
+.deleteMatiere {
+    display: inline;
+}
